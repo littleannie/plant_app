@@ -13,6 +13,4 @@ class User < ApplicationRecord
   has_many :chatmembers
   has_many :chatrooms, through: :chatmembers
 
-  validates :first_name, presence: true
-  validates :last_name, presence: true
 end

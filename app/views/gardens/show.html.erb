@@ -1,0 +1,7 @@
+<ul>
+  <li><%= @garden.name %></li>
+  <li><%= @garden.description %></li>
+  <li><%= @garden.location %></li>
+</ul>
+
+<%= link_to "Supprimer", garden_path(@garden), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %>
