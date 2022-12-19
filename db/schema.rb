@@ -10,9 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_19_105446) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_19_105829) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bookings", force: :cascade do |t|
+    t.string "message"
+    t.integer "status"
+    t.bigint "garden_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["garden_id"], name: "index_bookings_on_garden_id"
+  end
+
+  create_table "chatmembers", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "chatroom_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chatroom_id"], name: "index_chatmembers_on_chatroom_id"
+    t.index ["user_id"], name: "index_chatmembers_on_user_id"
+  end
+
+  create_table "chatrooms", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "gardens", force: :cascade do |t|
     t.string "name"
@@ -26,6 +50,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_19_105446) do
     t.index ["user_id"], name: "index_gardens_on_user_id"
   end
 
+  create_table "messages", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "chatroom_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chatroom_id"], name: "index_messages_on_chatroom_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
   create_table "plants", force: :cascade do |t|
     t.string "name"
     t.string "specie"
@@ -33,6 +66,27 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_19_105446) do
     t.string "picture"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.string "description"
+    t.integer "rating"
+    t.bigint "booking_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["booking_id"], name: "index_reviews_on_booking_id"
+    t.index ["user_id"], name: "index_reviews_on_user_id"
+  end
+
+  create_table "user_plants", force: :cascade do |t|
+    t.string "user_picture"
+    t.bigint "user_id", null: false
+    t.bigint "plant_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["plant_id"], name: "index_user_plants_on_plant_id"
+    t.index ["user_id"], name: "index_user_plants_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -47,5 +101,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_19_105446) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "bookings", "gardens"
+  add_foreign_key "chatmembers", "chatrooms"
+  add_foreign_key "chatmembers", "users"
   add_foreign_key "gardens", "users"
+  add_foreign_key "messages", "chatrooms"
+  add_foreign_key "messages", "users"
+  add_foreign_key "reviews", "bookings"
+  add_foreign_key "reviews", "users"
+  add_foreign_key "user_plants", "plants"
+  add_foreign_key "user_plants", "users"
 end
