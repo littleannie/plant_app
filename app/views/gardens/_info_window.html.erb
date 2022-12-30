@@ -1,0 +1,7 @@
+<%= link_to garden_path(garden) do %>
+  <div>
+    <%= garden.picture.attached? ? cl_image_tag(garden.picture.key, crop: :fill) : image_tag("plant") %>
+    <h2><%= garden.name.capitalize %></h2>
+    <p><%= garden.location %></p>
+  </div>
+<% end %>
