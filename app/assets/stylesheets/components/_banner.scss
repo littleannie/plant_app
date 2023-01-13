@@ -12,6 +12,7 @@
   font-size: 5em;
   width: 56%;
   text-align: end;
+  margin-bottom: 0.4em;
 }
 
 .banner p {
@@ -24,4 +25,6 @@
 .banner .container {
   display: flex;
   justify-content: flex-end;
+  align-items: flex-end;
+  flex-direction: column;
 }

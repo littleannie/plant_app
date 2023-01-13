@@ -1,0 +1,29 @@
+.button {
+  padding: 10px 20px;
+  border-radius: 22px;
+  text-decoration: none;
+}
+
+.button:hover {
+  opacity: 0.8;
+}
+
+.button-primary {
+  color: white;
+  background-color: #DF7861;
+  border: solid #DF7861 1px;
+}
+
+.button-primary:hover {
+  color: white;
+}
+
+.button-secondary {
+  color: #DF7861;
+  background-color: white;
+  border: solid #DF7861 1px;
+}
+
+.button-secondary:hover {
+  color: #DF7861;
+}
