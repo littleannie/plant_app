@@ -4,13 +4,17 @@ class GardensController < ApplicationController
 
   def index
     @gardens = Garden.all
+    if params[:query].present?
+      @gardens = Garden.where(name: params[:query])
+    else
+      @gardens = Garden.all
+    end
     @markers = @gardens.geocoded.map do |garden|
       {
         lat: garden.latitude,
         lng: garden.longitude,
-        info_window: render_to_string(partial: "info_window", locals: {garden: garden}),
+        info_window: render_to_string(partial: "info_window", locals: { garden: garden }),
         image_url: helpers.asset_url("https://res.cloudinary.com/dsdsbuerw/image/upload/w_200,h_200,c_fill,r_max/v1672396439/development/#{garden.picture.key}.png")
-
       }
     end
   end
